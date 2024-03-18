@@ -112,16 +112,50 @@ def load_medqa(randomize_choices=False):
     correct_answers = shuffled_df['answer'].values
     shuffle = shuffled_df['shuffle'].values
     q_idx = list(df.index.values)
-    return questions, correct_answers, q_idx, shuffle
+    return questions, correct_answers, q_idx, shuffle, choices
 
-def load_questions(questions_path, choices=["A", "B", "C", "D", "E"], randomize_choices=False):
+def load_medmcqa(randomize_choices=False):
+    ### Loads the medqa dataset and parses it into the desired format
+    medmcqa = load_dataset("openlifescienceai/medmcqa",split='train')
+    df = medmcqa.to_pandas()
+    choices = ['A','B','C','D']
+
+    df = df.rename(columns={'opa': 'A', 'opb': 'B', 'opc': 'C', 'opd': 'D'})
+
+    df['answer'] = df['cop'].apply(lambda x: choices[x])
+
+    random.seed(0)
+
+    def format_prompt(row, choices):
+        answer_choices = [row[c] for c in choices]
+        keys = list(range(len(choices)))
+        if randomize_choices:
+            random.shuffle(keys)
+        text = f"Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D]. Question: {row['question']} A) {answer_choices[keys[0]]} B) {answer_choices[keys[1]]} C) {answer_choices[keys[2]]} D) {answer_choices[keys[3]]}"
+        answer = choices[keys.index(choices.index(row['answer']))]
+        return pd.Series([text, answer, keys],index=['question','answer', 'shuffle'])
+    
+    shuffled_df = df[['question', 'A', 'B', 'C', 'D','answer']].apply(lambda x: format_prompt(x,choices),axis=1)
+    questions = shuffled_df['question'].values
+    correct_answers = shuffled_df['answer'].values
+    shuffle = shuffled_df['shuffle'].values
+    q_idx = list(df.index.values)
+    return questions, correct_answers, q_idx, shuffle, choices
+
+
+
+def load_questions(questions_path, randomize_choices=False):
 
     if questions_path == 'medqa':
-        questions, correct_answers, q_idx, shuffle = load_medqa(randomize_choices)
+        questions, correct_answers, q_idx, shuffle, choices = load_medqa(randomize_choices)
+
+    elif questions_path 'medmcqa':
+        questions, correct_answers, q_idx, shuffle, choices = load_medqa(randomize_choices)
 
     else:
 
         ### Loads a csv file with columns labelled 'Question' and 'Answer' and returns two lists with the questions and answers
+        choices=["A", "B", "C", "D", "E"]
         df = pd.read_csv(questions_path, ).set_index('Unnamed: 0')
         random.seed(0)
 
@@ -140,7 +174,7 @@ def load_questions(questions_path, choices=["A", "B", "C", "D", "E"], randomize_
         shuffle = shuffled_df['shuffle'].values
         q_idx = list(df.index.values)
 
-    return questions, correct_answers, q_idx, shuffle
+    return questions, correct_answers, q_idx, shuffle, choices
 
 
 ##################################
@@ -178,12 +212,11 @@ model = AutoModelForCausalLM.from_pretrained(
 # not yet available on python 3.12
 # model = torch.compile(model, mode="reduce-overhead", fullgraph=True)
 
-questions, correct_answers, q_idx, shuffles = load_questions(questions_path, randomize_choices=randomize_choices)
+questions, correct_answers, q_idx, shuffles, choices = load_questions(questions_path, randomize_choices=randomize_choices)
 questions, correct_answers, q_idx, shuffles = questions[:question_limit], correct_answers[:question_limit], q_idx[:question_limit], shuffles[:question_limit]
 
 max_length = np.max([len(q) for q in questions])
 qas = QAs([])
-choices =["A", "B", "C", "D", "E"]
 choice_tokens = tokenizer(choices, add_special_tokens=False, return_tensors="pt", max_length=1, padding="max_length", truncation=True).input_ids.tolist()
 
 
