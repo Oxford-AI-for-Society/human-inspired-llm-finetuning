@@ -15,7 +15,7 @@ import os
 
 ## Options to change regularly
 
-with open('../../home/andrew/tokens.json') as f:
+with open('../../../home/blac0817/tokens.json') as f:
     tokens = json.load(f)
 hf_token = tokens['hugging_face']
 
@@ -23,22 +23,25 @@ hf_token = tokens['hugging_face']
 models = { #'Mistral 8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32000},
            #'Meditron 7B': {'name':'epfl-llm/meditron-7b','context':4096},
            #'Llama 2 7B':  {'name':'meta-llama/Llama-2-7b-chat-hf','context':4096},
-           'Llama 13 7B':  {'name':'meta-llama/Llama-2-13b-chat-hf','context':4096},
+           #'Llama 2 13B':  {'name':'meta-llama/Llama-2-13b-chat-hf','context':4096},
+           'Llama 2 70B':  {'name':'meta-llama/Llama-2-70b-chat-hf','context':4096},
+           'Meditron 70B': {'name':'epfl-llm/meditron-70b','context':4096},
            #'Gemma 7B': {'name':'google/gemma-7b-it','context':8192}
           }
 
+
 model = 'Meditron 7B'
 
-#cache_dir = '../../data/blac0817/huggingface'
-#os.putenv("HF_HOME", cache_dir)
-#questions_path = "../../data/blac0817/data/master_questions.csv"
+cache_dir = '../../../data/blac0817/huggingface'
+os.putenv("HF_HOME", cache_dir)
+questions_path = "../../../data/blac0817/data/master_questions.csv"
 questions_path = 'medqa'
 
 batch_size = 4
 question_limit = 100000  # for testing
 randomize_choices = False
 
-out_folder = "../../code/human-learning-strategies/responses"
+out_folder = "../../../data/blac0817/human-learning-strategies/responses"
 file_suffix = '_medqa.json'
 
 
@@ -197,8 +200,9 @@ for model_pretty_name in models.keys():
         model_name,
         token=hf_token,
         torch_dtype=torch.bfloat16,
-        device_map="cuda:0",
+        device_map="auto",
         # use_flash_attention_2=True,
+        cache_dir = cache_dir,
         trust_remote_code=True,
         #quantization_config=bnb_config,
     )
