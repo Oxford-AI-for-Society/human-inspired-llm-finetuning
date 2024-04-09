@@ -1,0 +1,254 @@
+{
+    "questions": [
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 23-year-old pregnant woman at 22 weeks gestation presents with burning upon urination. She states it started 1 day ago and has been worsening despite drinking more water and taking cranberry extract. She otherwise feels well and is followed by a doctor for her pregnancy. Her temperature is 97.7\u00b0F (36.5\u00b0C), blood pressure is 122/77 mmHg, pulse is 80/min, respirations are 19/min, and oxygen saturation is 98% on room air. Physical exam is notable for an absence of costovertebral angle tenderness and a gravid uterus. Which of the following is the best treatment for this patient? A) Ampicillin B) Ceftriaxone C) Ciprofloxacin D) Doxycycline E) Nitrofurantoin",
+            "correct_answer": "E",
+            "question_index": 0,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "A",
+            "top3": [
+                "A",
+                "D",
+                "B"
+            ],
+            "clls": [
+                -0.3126123547554016,
+                -3.187612295150757,
+                -4.062612533569336,
+                -1.6876122951507568,
+                -3.687612295150757
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 3-month-old baby died suddenly at night while asleep. His mother noticed that he had died only after she awoke in the morning. No cause of death was determined based on the autopsy. Which of the following precautions could have prevented the death of the baby? A) Placing the infant in a supine position on a firm mattress while sleeping B) Routine postnatal electrocardiogram (ECG) C) Keeping the infant covered and maintaining a high room temperature D) Application of a device to maintain the sleeping position E) Avoiding pacifier use during sleep",
+            "correct_answer": "A",
+            "question_index": 1,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "E",
+            "top3": [
+                "E",
+                "A",
+                "D"
+            ],
+            "clls": [
+                -3.695535659790039,
+                -4.820535659790039,
+                -4.320535659790039,
+                -3.820535659790039,
+                -0.07053562998771667
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A mother brings her 3-week-old infant to the pediatrician's office because she is concerned about his feeding habits. He was born without complications and has not had any medical problems up until this time. However, for the past 4 days, he has been fussy, is regurgitating all of his feeds, and his vomit is yellow in color. On physical exam, the child's abdomen is minimally distended but no other abnormalities are appreciated. Which of the following embryologic errors could account for this presentation? A) Abnormal migration of ventral pancreatic bud B) Complete failure of proximal duodenum to recanalize C) Error in neural crest cell migration D) Abnormal hypertrophy of the pylorus E) Failure of lateral body folds to move ventrally and fuse in the midline",
+            "correct_answer": "A",
+            "question_index": 2,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "D",
+            "top3": [
+                "D",
+                "E",
+                "A"
+            ],
+            "clls": [
+                -1.7757312059402466,
+                -3.775731086730957,
+                -2.400731086730957,
+                -1.0257312059402466,
+                -1.0257312059402466
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A pulmonary autopsy specimen from a 58-year-old woman who died of acute hypoxic respiratory failure was examined. She had recently undergone surgery for a fractured femur 3 months ago. Initial hospital course was uncomplicated, and she was discharged to a rehab facility in good health. Shortly after discharge home from rehab, she developed sudden shortness of breath and had cardiac arrest. Resuscitation was unsuccessful. On histological examination of lung tissue, fibrous connective tissue around the lumen of the pulmonary artery is observed. Which of the following is the most likely pathogenesis for the present findings? A) Thromboembolism B) Pulmonary ischemia C) Pulmonary hypertension D) Pulmonary passive congestion E) Pulmonary hemorrhage",
+            "correct_answer": "A",
+            "question_index": 3,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "A",
+            "top3": [
+                "A",
+                "E",
+                "D"
+            ],
+            "clls": [
+                -0.5907254219055176,
+                -3.3407254219055176,
+                -4.715725421905518,
+                -1.9657254219055176,
+                -1.3407254219055176
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 20-year-old woman presents with menorrhagia for the past several years. She says that her menses \u201chave always been heavy\u201d, and she has experienced easy bruising for as long as she can remember. Family history is significant for her mother, who had similar problems with bruising easily. The patient's vital signs include: heart rate 98/min, respiratory rate 14/min, temperature 36.1\u00b0C (96.9\u00b0F), and blood pressure 110/87 mm Hg. Physical examination is unremarkable. Laboratory tests show the following: platelet count 200,000/mm3, PT 12 seconds, and PTT 43 seconds. Which of the following is the most likely cause of this patient\u2019s symptoms? A) Factor V Leiden B) Hemophilia A C) Lupus anticoagulant D) Protein C deficiency E) Von Willebrand disease",
+            "correct_answer": "E",
+            "question_index": 4,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "A",
+            "top3": [
+                "A",
+                "B",
+                "D"
+            ],
+            "clls": [
+                -0.3316469192504883,
+                -1.7066469192504883,
+                -3.3316469192504883,
+                -3.2066469192504883,
+                -3.7066469192504883
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 40-year-old zookeeper presents to the emergency department complaining of severe abdominal pain that radiates to her back, and nausea. The pain started 2 days ago and slowly increased until she could not tolerate it any longer. Past medical history is significant for hypertension and hypothyroidism. Additionally, she reports that she was recently stung by one of the zoo\u2019s smaller scorpions, but did not seek medical treatment. She takes aspirin, levothyroxine, oral contraceptive pills, and a multivitamin daily. Family history is noncontributory. Today, her blood pressure is 108/58 mm Hg, heart rate is 99/min, respiratory rate is 21/min, and temperature is 37.0\u00b0C (98.6\u00b0F). On physical exam, she is a well-developed, obese female that looks unwell. Her heart has a regular rate and rhythm. Radial pulses are weak but symmetric. Her lungs are clear to auscultation bilaterally. Her lateral left ankle is swollen, erythematous, and painful to palpate. An abdominal CT is consistent with acute pancreatitis. Which of the following is the most likely etiology for this patient\u2019s disease? A) Aspirin B) Oral contraceptive pills C) Scorpion sting D) Hypothyroidism E) Obesity",
+            "correct_answer": "C",
+            "question_index": 5,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "A",
+            "top3": [
+                "A",
+                "B",
+                "C"
+            ],
+            "clls": [
+                -0.40965020656585693,
+                -1.659650206565857,
+                -2.5346503257751465,
+                -3.5346503257751465,
+                -3.2846503257751465
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 25-year-old primigravida presents to her physician for a routine prenatal visit. She is at 34 weeks gestation, as confirmed by an ultrasound examination. She has no complaints, but notes that the new shoes she bought 2 weeks ago do not fit anymore. The course of her pregnancy has been uneventful and she has been compliant with the recommended prenatal care. Her medical history is unremarkable. She has a 15-pound weight gain since the last visit 3 weeks ago. Her vital signs are as follows: blood pressure, 148/90 mm Hg; heart rate, 88/min; respiratory rate, 16/min; and temperature, 36.6\u2103 (97.9\u2109). The blood pressure on repeat assessment 4 hours later is 151/90 mm Hg. The fetal heart rate is 151/min. The physical examination is significant for 2+ pitting edema of the lower extremity. Which of the following tests o should confirm the probable condition of this patient? A) Bilirubin assessment B) Coagulation studies C) Hematocrit assessment D) Leukocyte count with differential E) 24-hour urine protein",
+            "correct_answer": "E",
+            "question_index": 6,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "D",
+            "top3": [
+                "D",
+                "A",
+                "B"
+            ],
+            "clls": [
+                -1.110520601272583,
+                -1.860520601272583,
+                -2.610520601272583,
+                -0.8605205416679382,
+                -3.985520601272583
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 3900-g (8.6-lb) male infant is delivered at 39 weeks' gestation via spontaneous vaginal delivery. Pregnancy and delivery were uncomplicated but a prenatal ultrasound at 20 weeks showed a defect in the pleuroperitoneal membrane. Further evaluation of this patient is most likely to show which of the following findings? A) Gastric fundus in the thorax B) Pancreatic ring around the duodenum C) Small and cystic kidneys D) Hypertrophy of the gastric pylorus E) Large bowel in the inguinal canal",
+            "correct_answer": "A",
+            "question_index": 7,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "E",
+            "top3": [
+                "E",
+                "A",
+                "C"
+            ],
+            "clls": [
+                -1.8579034805297852,
+                -4.357903480529785,
+                -3.357903480529785,
+                -5.482903480529785,
+                -0.23290354013442993
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 62-year-old woman presents for a regular check-up. She complains of lightheadedness and palpitations which occur episodically. Past medical history is significant for a myocardial infarction 6 months ago and NYHA class II chronic heart failure. She also was diagnosed with grade I arterial hypertension 4 years ago. Current medications are aspirin 81 mg, atorvastatin 10 mg, enalapril 10 mg, and metoprolol 200 mg daily. Her vital signs are a blood pressure of 135/90 mm Hg, a heart rate of 125/min, a respiratory rate of 14/min, and a temperature of 36.5\u00b0C (97.7\u00b0F). Cardiopulmonary examination is significant for irregular heart rhythm and decreased S1 intensity. ECG is obtained and is shown in the picture (see image). Echocardiography shows a left ventricular ejection fraction of 39%. Which of the following drugs is the best choice for rate control in this patient? A) Atenolol B) Verapamil C) Diltiazem D) Propafenone E) Digoxin",
+            "correct_answer": "E",
+            "question_index": 8,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "A",
+            "top3": [
+                "A",
+                "D",
+                "B"
+            ],
+            "clls": [
+                -0.16424937546253204,
+                -3.2892494201660156,
+                -3.5392494201660156,
+                -3.0392494201660156,
+                -3.2892494201660156
+            ]
+        },
+        {
+            "question": "Answer the following multiple choice question by giving the most appropriate response. The answer should be one of [A, B, C, D, E]. Question: A 35-year-old male presents to his primary care physician with complaints of seasonal allergies. He has been using intranasal vasoconstrictors several times per day for several weeks. What is a likely sequela of the chronic use of topical nasal decongestants? A) Epistaxis B) Hypertension C) Permanent loss of smell D) Persistent nasal crusting E) Persistent congestion",
+            "correct_answer": "E",
+            "question_index": 9,
+            "shuffle": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "response": "E",
+            "top3": [
+                "E",
+                "A",
+                "D"
+            ],
+            "clls": [
+                -1.9407365322113037,
+                -4.565736293792725,
+                -5.315736293792725,
+                -2.1907365322113037,
+                -0.3157365024089813
+            ]
+        }
+    ]
+}
