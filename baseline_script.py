@@ -15,34 +15,38 @@ import os
 
 ## Options to change regularly
 
-with open('../../../home/blac0817/tokens.json') as f:
+with open('../../home/andrew/tokens.json') as f:
     tokens = json.load(f)
 hf_token = tokens['hugging_face']
 
 
-models = { #'Mistral 8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32000},
+models = { 'Mistral 8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32768},
            #'Meditron 7B': {'name':'epfl-llm/meditron-7b','context':4096},
            #'Llama 2 7B':  {'name':'meta-llama/Llama-2-7b-chat-hf','context':4096},
            #'Llama 2 13B':  {'name':'meta-llama/Llama-2-13b-chat-hf','context':4096},
-           'Llama 2 70B':  {'name':'meta-llama/Llama-2-70b-chat-hf','context':4096},
-           'Meditron 70B': {'name':'epfl-llm/meditron-70b','context':4096},
+           #'Llama 2 70B':  {'name':'meta-llama/Llama-2-70b-chat-hf','context':4096},
+           #'Meditron 70B': {'name':'epfl-llm/meditron-70b','context':4096},
            #'Gemma 7B': {'name':'google/gemma-7b-it','context':8192}
+           #'Jamba': {'name':'ai21labs/Jamba-v0.1','context':256000},
+           #'DBRX': {'name':'databricks/dbrx-instruct','context':32768}
+
           }
 
 
-model = 'Meditron 7B'
+#model = 'DBRX'
 
-cache_dir = '../../../data/blac0817/huggingface'
-os.putenv("HF_HOME", cache_dir)
-questions_path = "../../../data/blac0817/data/master_questions.csv"
-questions_path = 'medqa'
+#cache_dir = '../../../data/blac0817/huggingface'
+#os.putenv("HF_HOME", cache_dir)
+#questions_path = "../../../data/blac0817/data/master_questions.csv"
+questions_path = 'medmcqa'
 
-batch_size = 4
+batch_size = 8
 question_limit = 100000  # for testing
 randomize_choices = False
 
-out_folder = "../../../data/blac0817/human-learning-strategies/responses"
-file_suffix = '_medqa.json'
+#out_folder = "../../../data/blac0817/human-learning-strategies/responses"
+out_folder = "../../code/human-learning-strategies/responses"
+file_suffix = '_medmcqa.json'
 
 
 ## Data structure for outputs
@@ -130,9 +134,9 @@ def load_medmcqa(randomize_choices=False):
     df = medmcqa.to_pandas()
     choices = ['A','B','C','D']
 
-    df = df.rename(columns={'question':'prompt','opa': 'A', 'opb': 'B', 'opc': 'C', 'opd': 'D','answer':'Answer'})
-
     df['answer'] = df['cop'].apply(lambda x: choices[x])
+
+    df = df.rename(columns={'question':'prompt','opa': 'A', 'opb': 'B', 'opc': 'C', 'opd': 'D','answer':'Answer'})
 
     random.seed(0)
 
@@ -148,10 +152,12 @@ def load_medmcqa(randomize_choices=False):
 def load_questions(questions_path, randomize_choices=False):
 
     if questions_path == 'medqa':
+        print('loading medqa')
         questions, correct_answers, q_idx, shuffle, choices = load_medqa(randomize_choices)
 
     elif questions_path == 'medmcqa':
-        questions, correct_answers, q_idx, shuffle, choices = load_medqa(randomize_choices)
+        print('loading medmcqa')
+        questions, correct_answers, q_idx, shuffle, choices = load_medmcqa(randomize_choices)
 
     else:
 
@@ -176,6 +182,10 @@ def load_questions(questions_path, randomize_choices=False):
 
 ## Loading the model 
 
+questions, correct_answers, q_idx, shuffles, choices = load_questions(questions_path, randomize_choices=randomize_choices)
+questions, correct_answers, q_idx, shuffles = questions[:question_limit], correct_answers[:question_limit], q_idx[:question_limit], shuffles[:question_limit]
+
+
 for model_pretty_name in models.keys():
 
     model_name = models[model_pretty_name]['name']
@@ -190,28 +200,26 @@ for model_pretty_name in models.keys():
     )
     tokenizer.pad_token = tokenizer.eos_token
 
-    #bnb_config = BitsAndBytesConfig(
-        #load_in_8bit=True,
-        #bnb_4bit_compute_dtyp=torch.bfloat16,
-    #)
-
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16
+        )
     # faster on single gpu if the model can fit, change "auto" to "cuda:0"
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         token=hf_token,
-        torch_dtype=torch.bfloat16,
+        #torch_dtype=torch.bfloat16,
         device_map="auto",
         # use_flash_attention_2=True,
-        cache_dir = cache_dir,
+        #cache_dir = cache_dir,
         trust_remote_code=True,
-        #quantization_config=bnb_config,
+        quantization_config=bnb_config,
     )
 
     # not yet available on python 3.12
     # model = torch.compile(model, mode="reduce-overhead", fullgraph=True)
-
-    questions, correct_answers, q_idx, shuffles, choices = load_questions(questions_path, randomize_choices=randomize_choices)
-    questions, correct_answers, q_idx, shuffles = questions[:question_limit], correct_answers[:question_limit], q_idx[:question_limit], shuffles[:question_limit]
 
     model_context = models[model_pretty_name]['context']
     max_length = np.max([len(q) for q in questions])
@@ -220,7 +228,8 @@ for model_pretty_name in models.keys():
     choice_tokens = tokenizer(choices, add_special_tokens=False, return_tensors="pt", max_length=1, padding="max_length", truncation=True).input_ids.tolist()
 
 
-    for batch in tqdm(make_batch(questions, correct_answers, q_idx, shuffles, batch_size=batch_size)):
+    print('Starting first batch...')
+    for i,batch in tqdm(enumerate(make_batch(questions, correct_answers, q_idx, shuffles, batch_size=batch_size))):
         
         response = rank_multichoice(batch['questions'], max_length, choice_tokens)
 
@@ -232,6 +241,12 @@ for model_pretty_name in models.keys():
             ]
 
         qas.questions.extend(rs)
+
+        # saving along the way just in case
+        if (i % 100) == 0:
+            folder = Path(out_folder)
+            folder.mkdir(exist_ok=True)
+            (folder / filename).write_text(json.dumps(qas.to_dict(), indent=4))
 
             
     folder = Path(out_folder)
