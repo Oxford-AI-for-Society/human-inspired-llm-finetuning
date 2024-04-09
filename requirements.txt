@@ -55,7 +55,6 @@ fsspec==2024.2.0
 future==1.0.0
 fuzzywuzzy==0.18.0
 google-api-core==2.15.0
-# google-auth==2.22.0
 google-auth-oauthlib==1.1.0
 googleapis-common-protos==1.56.4
 gradio==3.41.0
@@ -99,7 +98,6 @@ jupyterlab-pygments==0.1.2
 jupyterlab_server==2.25.1
 jupyterlab-widgets==3.0.9
 kiwisolver==1.4.5
-# langchain==0.0.291
 langsmith==0.0.75
 lazy_loader==0.3
 llvmlite==0.42.0
@@ -250,8 +248,6 @@ tinycss2==1.2.1
 tokenizers==0.15.2
 toolz==0.12.0
 torch==2.2.1
-# torchaudio==2.1.1+cu118
-# torchvision==0.16.1
 tornado==6.4
 tqdm==4.66.2
 traitlets==5.14.2
