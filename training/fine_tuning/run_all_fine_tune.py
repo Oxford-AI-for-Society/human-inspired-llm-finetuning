@@ -40,9 +40,9 @@ num_epochs = 1
 dataloader_num_workers = 16
 
 # List of data ordering functions
-data_ordering_functions = [original, random_shuffle_1, random_shuffle_2, blocked_curriculum_strict_2, blocked_curriculum_strict_3, blocked_emh_2, blocked_emh_3, interleaved_curriculum_strict_2, interleaved_curriculum_strict_3, interleaved_emh_2, interleaved_emh_3]
+# data_ordering_functions = [original, random_shuffle_1, random_shuffle_2, blocked_curriculum_strict_2, blocked_curriculum_strict_3, blocked_emh_2, blocked_emh_3, interleaved_curriculum_strict_2, interleaved_curriculum_strict_3, interleaved_emh_2, interleaved_emh_3]
 
-# data_ordering_functions = [original, random_shuffle_1, random_shuffle_2, curriculum_strict, curriculum_emh_1, curriculum_emh_2, blocked_1, blocked_2, blocked_3, blocked_curriculum_strict_1, blocked_curriculum_strict_2, blocked_curriculum_strict_3, blocked_emh_1, blocked_emh_2, blocked_emh_3, interleaved_1, interleaved_2, interleaved_3, interleaved_curriculum_strict_1, interleaved_curriculum_strict_2, interleaved_curriculum_strict_3, interleaved_emh_1, interleaved_emh_2, interleaved_emh_3]
+data_ordering_functions = [original, random_shuffle_1, random_shuffle_2, curriculum_strict, curriculum_emh_1, curriculum_emh_2, blocked_1, blocked_2, blocked_3, blocked_curriculum_strict_1, blocked_curriculum_strict_2, blocked_curriculum_strict_3, blocked_emh_1, blocked_emh_2, blocked_emh_3, interleaved_1, interleaved_2, interleaved_3, interleaved_curriculum_strict_1, interleaved_curriculum_strict_2, interleaved_curriculum_strict_3, interleaved_emh_1, interleaved_emh_2, interleaved_emh_3]
 
 # Ensure the experiments.queue file exists
 queue_file_path = "fine_tune_experiments.queue"
@@ -82,7 +82,7 @@ with open(queue_file_path, "a") as queue_file:
                     os.makedirs(saved_model_dir, exist_ok=True)
 
                 # Prepare the fine-tuning command with the path to the processed CSV
-                run_command = f"python fine_tune.py --model_name {model_name} --train_data_file {processed_csv_path} --saved_model_dir {saved_model_dir} --num_of_epochs {num_epochs} --per_device_train_batch_size {model['batch_size']} --per_device_eval_batch_size {model['batch_size']} --gradient_accumulation_steps {model['grad_accum']} --learning_rate {model['lr']} --dataloader_num_workers {dataloader_num_workers}\n"
+                run_command = f"python3 fine_tune.py --model_name {model_name} --train_data_file {processed_csv_path} --saved_model_dir {saved_model_dir} --num_of_epochs {num_epochs} --per_device_train_batch_size {model['batch_size']} --per_device_eval_batch_size {model['batch_size']} --gradient_accumulation_steps {model['grad_accum']} --learning_rate {model['lr']} --dataloader_num_workers {dataloader_num_workers}\n"
                 queue_file.write(run_command)
 
 print("Commands for fine-tuning tasks with different data ordering have been added to the queue.")
