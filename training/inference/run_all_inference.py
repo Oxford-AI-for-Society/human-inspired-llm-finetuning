@@ -55,7 +55,7 @@ with open(queue_file_path, "a") as queue_file:
 
                     # If inference is not yet done for this model on this dataset
                     if not os.path.exists(model_results_dir) or not os.listdir(model_results_dir):
-                        run_command = f"python {inference_script} --model_name=\"{model_path}\" --test_data_file=\"{test_dataset}\" --saved_result_dir=\"{model_results_dir}\"\n"    # --batch_size={batch_size}\n
+                        run_command = f"python3 {inference_script} --model_name=\"{model_path}\" --test_data_file=\"{test_dataset}\" --saved_result_dir=\"{model_results_dir}\"\n"    # --batch_size={batch_size}\n
                         queue_file.write(run_command)
                     else:
                         print(f"Results already exist for model: {model_path}, skipping inference.")
