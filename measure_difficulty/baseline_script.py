@@ -15,7 +15,7 @@ import os
 
 ## Options to change regularly
 
-with open('../../../home/andrew/tokens.json') as f:
+with open('~/tokens.json') as f:
     tokens = json.load(f)
 hf_token = tokens['hugging_face']
 
@@ -33,20 +33,18 @@ models = { #'Mistral 8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':3276
           }
 
 
-#model = 'DBRX'
-
-#cache_dir = '../../../data/blac0817/huggingface'
-#os.putenv("HF_HOME", cache_dir)
+cache_dir = '$DATA/huggingface'
+os.putenv("HF_HOME", cache_dir)
 #questions_path = "../../../data/blac0817/data/master_questions.csv"
-questions_path = 'medqa'
+questions_path = 'medmcqa'
 
 batch_size = 8
 question_limit = 100000  # for testing
 randomize_choices = False
 
 #out_folder = "../../../data/blac0817/human-learning-strategies/responses"
-out_folder = "../../../code/human-learning-strategies/responses"
-file_suffix = '_medqa.json'
+out_folder = "$DATA/human-learning-strategies/responses"
+file_suffix = '_medmcqa.json'
 
 
 ## Data structure for outputs
