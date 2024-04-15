@@ -30,20 +30,20 @@ parser.add_argument('-o','--outfile',type=str,help='The filename to save the res
 args = parser.parse_args()
 
 
-with open(Path('~/tokens.json').expanduser()) as f:
-    tokens = json.load(f)
-hf_token = tokens['hugging_face']
+# with open(Path('~/tokens.json').expanduser()) as f:
+    # tokens = json.load(f)
+# hf_token = tokens['hugging_face']
 
 # model registry
-models = { 'Mistral_8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32768,'flash_attn':True},
-           'Meditron_7B': {'name':'epfl-llm/meditron-7b','context':4096,'flash_attn':True},
-           'Meditron_70B': {'name':'epfl-llm/meditron-70b','context':4096,'flash_attn':True},
-           'Llama_2_7B':  {'name':'meta-llama/Llama-2-7b-chat-hf','context':4096,'flash_attn':True},
-           'Llama_2_13B':  {'name':'meta-llama/Llama-2-13b-chat-hf','context':4096,'flash_attn':True},
-           'Llama_2_70B':  {'name':'meta-llama/Llama-2-70b-chat-hf','context':4096,'flash_attn':True},
-           'Gemma_7B': {'name':'google/gemma-7b-it','context':8192,'flash_attn':True},
-           'Jamba': {'name':'ai21labs/Jamba-v0.1','context':256000,'flash_attn':False},
-           'DBRX': {'name':'databricks/dbrx-instruct','context':32768,'flash_attn':False}
+models = { 'Mistral_8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32768,'flash_attn':True, "device_map": "auto", "dtype": "8bit"},
+           'Meditron_7B': {'name':'epfl-llm/meditron-7b','context':4096,'flash_attn':True, "device_map": "cuda:0", "dtype": "bf16"},
+           'Meditron_70B': {'name':'epfl-llm/meditron-70b','context':4096,'flash_attn':True, "device_map": "auto", "dtype": "8bit"},
+           'Llama_2_7B':  {'name':'meta-llama/Llama-2-7b-chat-hf','context':4096,'flash_attn':True, "device_map": "cuda:0", "dtype": "bf16"},
+           'Llama_2_13B':  {'name':'meta-llama/Llama-2-13b-chat-hf','context':4096,'flash_attn':True, "device_map": "cuda:0", "dtype": "bf16"},
+           'Llama_2_70B':  {'name':'meta-llama/Llama-2-70b-chat-hf','context':4096,'flash_attn':True, "device_map": "auto", "dtype": "8bit"},
+           'Gemma_7B': {'name':'google/gemma-7b-it','context':8192,'flash_attn':True, "device_map": "cuda:0", "dtype": "bf16"},
+           'Jamba': {'name':'ai21labs/Jamba-v0.1','context':256000,'flash_attn':False, "device_map": "auto", "dtype": "8bit"},
+           'DBRX': {'name':'databricks/dbrx-instruct','context':32768,'flash_attn':False, "device_map": "auto", "dtype": "8bit"}
           }
 
 
@@ -59,8 +59,8 @@ batch_size = args.batch_size
 question_limit = args.max_questions
 randomize_choices = args.random_order
 
-out_folder = Path(os.path.expandvars(args.hf_cache))
-
+# out_folder = Path(os.path.expandvars(args.hf_cache))
+out_folder = Path(".")
 ## Data structure for outputs
 
 @dataclass_json
@@ -198,7 +198,7 @@ model_name = models[model]['name']
 
 
 if args.outfile == 'modelname_questionsname.json':
-    filename = f'{model_name.split('/')[-1]}_{questions_dataset}.json'
+    filename = f"{model_name.split('/')[-1]}_{questions_dataset}.json"
 else:
     filename = args.outfile
 
@@ -206,31 +206,51 @@ else:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = AutoTokenizer.from_pretrained(
-    model_name, padding_side="left", trust_remote_code=True, token=hf_token
+    model_name, padding_side="left", trust_remote_code=True,# token=hf_token
 )
 tokenizer.pad_token = tokenizer.eos_token
 
-bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.bfloat16
-    )
 
 # faster on single gpu if the model can fit, change "auto" to "cuda:0"
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    token=hf_token,
-    device_map="auto",
-    #attn_implementation='flash_attention_2', # this doesn't seem to be working. I'm having trouble with the install
-    trust_remote_code=True,
-    quantization_config=bnb_config,
-)
+if models[model]['dtype'] not in ["8bit", "4bit"]: 
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        device_map=models[model]['device_map'],
+        #attn_implementation='flash_attention_2', # this doesn't seem to be working. I'm having trouble with the install
+        trust_remote_code=True,
+        torch_dtype=torch.float16,
+    )
+elif models[model]['dtype'] == "4bit":
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        device_map=models[model]['device_map'],
+        #attn_implementation='flash_attention_2', # this doesn't seem to be working. I'm having trouble with the install
+        trust_remote_code=True,
+        config=bnb_config,
+    )
+elif models[model]['dtype'] == "8bit":
+    bnb_config = BitsAndBytesConfig(
+        load_in_8bit=True,
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        device_map=models[model]['device_map'],
+        #attn_implementation='flash_attention_2', # this doesn't seem to be working. I'm having trouble with the install
+        trust_remote_code=True,
+        config=bnb_config,
+    )
+
 
 # not yet available on python 3.12
 # model = torch.compile(model, mode="reduce-overhead", fullgraph=True)
 
-model_context = models[model]['context']
+model_context = models[args.model]['context']
 max_length = np.max([len(q) for q in questions])
 max_length = np.min([max_length,model_context])
 qas = QAs([])
