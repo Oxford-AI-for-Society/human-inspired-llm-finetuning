@@ -69,9 +69,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-# with open(Path('~/tokens.json').expanduser()) as f:
-# tokens = json.load(f)
-# hf_token = tokens['hugging_face']
+hf_token = os.getenv('HF_TOKEN')
 
 # model registry
 models = {
@@ -225,7 +223,7 @@ def make_batch(questions, answers, indices, shuffle, batch_size=64):
     return batches
 
 
-def format_prompt(row, choices):
+def format_prompt(row, choices, randomize_choices=False):
     answer_choices = [row[c] for c in choices]
     keys = list(range(len(choices)))
     if randomize_choices:
@@ -239,10 +237,10 @@ def format_prompt(row, choices):
     return pd.Series([text, answer, keys], index=["question", "answer", "shuffle"])
 
 
-def load_medqa(randomize_choices=False):
+def load_medqa(randomize_choices=False,split='train'):
     ### Loads the medqa dataset and parses it into the desired format
     med_qa = load_dataset(
-        "bigbio/med_qa", "med_qa_en_source", trust_remote_code=True, split="train"
+        "bigbio/med_qa", "med_qa_en_source", trust_remote_code=True, split=split
     )
     df = med_qa.to_pandas()
     choices = ["A", "B", "C", "D", "E"]
@@ -311,6 +309,11 @@ def load_questions(questions_dataset, randomize_choices=False):
     if questions_dataset == "medqa":
         questions, correct_answers, q_idx, shuffle, choices = load_medqa(
             randomize_choices
+        )
+
+    elif questions_dataset == "medqa-test":
+        questions, correct_answers, q_idx, shuffle, choices = load_medqa(
+            randomize_choices, split='test'
         )
 
     elif questions_dataset == "medmcqa":
