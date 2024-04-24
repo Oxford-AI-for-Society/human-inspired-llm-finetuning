@@ -13,4 +13,6 @@
 module load Anaconda3/2020.11
 source activate $DATA/inference
 
-python baseline_script.py
+python measure_difficulty/baseline_script.py Llama_2_70B medmcqa --use_hf_cache True
+python measure_difficulty/baseline_script.py Mistral_8x7B medmcqa --use_hf_cache True
+python measure_difficulty/baseline_script.py Meditron_70B medmcqa --use_hf_cache True
