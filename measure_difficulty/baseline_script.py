@@ -113,7 +113,7 @@ models = {
         "context": 4096,
         "flash_attn": True,
         "device_map": "auto",
-        "dtype": "8bit",
+        "dtype": "4bit",
     },
     "Gemma_7B": {
         "name": "google/gemma-7b-it",
