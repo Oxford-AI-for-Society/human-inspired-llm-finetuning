@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('model', type=str, help='The name of the model to run. (See registry dict)')
 parser.add_argument('questions_dataset', type=str, help='The name or filepath of the questions dataset to run.')
 
-parser.add_argument('--batch_size',type=int, default=8)
+parser.add_argument('--batch_size',type=int, default=4)
 parser.add_argument('--max_questions',type=int,help='The maximum number of questions to run.',default=100000)
 parser.add_argument('--use_hf_cache',type=bool, help='Whether to set the HF cache', default=False)
 parser.add_argument('--hf_cache', type=str, help='The path to the HF cache.', default='$DATA/huggingface')
@@ -35,7 +35,7 @@ args = parser.parse_args()
 # hf_token = tokens['hugging_face']
 
 # model registry
-models = { 'Mistral_8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32768,'flash_attn':True, "device_map": "auto", "dtype": "8bit"},
+models = { 'Mistral_8x7B': {'name':'mistralai/Mixtral-8x7B-v0.1','context':32768,'flash_attn':True, "device_map": "auto", "dtype": "4bit"},
            'Meditron_7B': {'name':'epfl-llm/meditron-7b','context':4096,'flash_attn':True, "device_map": "cuda:0", "dtype": "bf16"},
            'Meditron_70B': {'name':'epfl-llm/meditron-70b','context':4096,'flash_attn':True, "device_map": "auto", "dtype": "8bit"},
            'Llama_2_7B':  {'name':'meta-llama/Llama-2-7b-chat-hf','context':4096,'flash_attn':True, "device_map": "cuda:0", "dtype": "bf16"},
@@ -258,8 +258,8 @@ choice_tokens = tokenizer(choices, add_special_tokens=False, return_tensors="pt"
 
 
 print('Starting first batch...')
-for i,batch in tqdm(enumerate(make_batch(questions, correct_answers, q_idx, shuffles, batch_size=batch_size))):
-    
+i=0 # count batches
+for batch in tqdm(make_batch(questions, correct_answers, q_idx, shuffles, batch_size=batch_size)):
     response = rank_multichoice(batch['questions'], max_length, choice_tokens)
 
     rs = [
@@ -272,7 +272,9 @@ for i,batch in tqdm(enumerate(make_batch(questions, correct_answers, q_idx, shuf
     qas.questions.extend(rs)
 
     # saving along the way just in case
+    i+=1
     if (i % 100) == 0:
+        i = 0
         folder = Path(out_folder)
         folder.mkdir(exist_ok=True)
         (folder / filename).write_text(json.dumps(qas.to_dict(), indent=4))
