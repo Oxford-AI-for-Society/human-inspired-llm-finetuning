@@ -429,10 +429,9 @@ choice_tokens = tokenizer(
 
 
 print("Starting first batch...")
-for i, batch in tqdm(
-    enumerate(
+i=0
+for batch in tqdm(
         make_batch(questions, correct_answers, q_idx, shuffles, batch_size=batch_size)
-    )
 ):
 
     response = rank_multichoice(batch["questions"], max_length, choice_tokens)
@@ -459,7 +458,9 @@ for i, batch in tqdm(
     qas.questions.extend(rs)
 
     # saving along the way just in case
-    if (i % 100) == 0:
+    i+=1
+    if i == 100:
+        i = 0
         folder = Path(out_folder)
         folder.mkdir(exist_ok=True)
         (folder / filename).write_text(json.dumps(qas.to_dict(), indent=4))
