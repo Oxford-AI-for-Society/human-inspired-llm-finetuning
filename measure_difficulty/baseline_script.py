@@ -69,16 +69,16 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-hf_token = os.getenv('HF_TOKEN')
+hf_token = os.getenv("HF_TOKEN")
 
 # model registry
 models = {
     "Mistral_8x7B": {
-        "name": "mistralai/Mixtral-8x7B-v0.1",
+        "name": "mistralai/Mixtral-8x7B-Instruct-v0.1",
         "context": 32768,
         "flash_attn": True,
         "device_map": "auto",
-        "dtype": "8bit",
+        "dtype": "4bit",
     },
     "Meditron_7B": {
         "name": "epfl-llm/meditron-7b",
@@ -138,6 +138,7 @@ models = {
     },
 }
 
+hf_token = os.environ["HF_TOKEN"]
 
 if args.use_hf_cache:
     cache_dir = Path(os.path.expandvars(args.hf_cache))
@@ -237,7 +238,7 @@ def format_prompt(row, choices, randomize_choices=False):
     return pd.Series([text, answer, keys], index=["question", "answer", "shuffle"])
 
 
-def load_medqa(randomize_choices=False,split='train'):
+def load_medqa(randomize_choices=False, split="train"):
     ### Loads the medqa dataset and parses it into the desired format
     med_qa = load_dataset(
         "bigbio/med_qa", "med_qa_en_source", trust_remote_code=True, split=split
@@ -313,7 +314,7 @@ def load_questions(questions_dataset, randomize_choices=False):
 
     elif questions_dataset == "medqa-test":
         questions, correct_answers, q_idx, shuffle, choices = load_medqa(
-            randomize_choices, split='test'
+            randomize_choices, split="test"
         )
 
     elif questions_dataset == "medmcqa":
@@ -369,9 +370,7 @@ else:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = AutoTokenizer.from_pretrained(
-    model_name,
-    padding_side="left",
-    trust_remote_code=True,  # token=hf_token
+    model_name, padding_side="left", trust_remote_code=True, token=hf_token
 )
 tokenizer.pad_token = tokenizer.eos_token
 
