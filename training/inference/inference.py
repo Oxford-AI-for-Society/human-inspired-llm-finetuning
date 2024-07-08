@@ -87,42 +87,42 @@ def evaluate_model_on_dataset(model, tokenizer, dataset, batch_size=8):
 
 
 
-# def evaluate_model_on_dataset(model, tokenizer, dataset):
-#     model.eval()
-#     preds = []
+def evaluate_model_on_dataset_four_options(model, tokenizer, dataset):
+    model.eval()
+    preds = []
 
-#     for idx in tqdm(range(len(dataset["train"])), total=len(dataset["train"])):
-#         with torch.no_grad():
-#             # Prepare the sample inputs
-#             cols = ["A", "B", "C", "D"] # "E"
-#             perps = []
-#             samples = [dataset["train"][idx]['text'] + col for col in cols]
+    for idx in tqdm(range(len(dataset["train"])), total=len(dataset["train"])):
+        with torch.no_grad():
+            # Prepare the sample inputs
+            cols = ["A", "B", "C", "D"] 
+            perps = []
+            samples = [dataset["train"][idx]['text'] + col for col in cols]
 
-#             # Tokenize the samples
-#             inputs = tokenizer(samples, return_tensors="pt", add_special_tokens=False, padding=True, truncation=True, max_length=500)
+            # Tokenize the samples
+            inputs = tokenizer(samples, return_tensors="pt", add_special_tokens=False, padding=True, truncation=True, max_length=500)
 
-#             # Get model output
-#             output = model(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"])
-#             logits = output.logits
-#             labels = inputs["input_ids"] # Set up the ground truth for the next-token prediction
-#             labels.masked_fill_(~inputs["attention_mask"].bool(), -100) # Mask out the tokens that the model should not consider for loss calculation, only keep the option label
+            # Get model output
+            output = model(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"])
+            logits = output.logits
+            labels = inputs["input_ids"] # Set up the ground truth for the next-token prediction
+            labels.masked_fill_(~inputs["attention_mask"].bool(), -100) # Mask out the tokens that the model should not consider for loss calculation, only keep the option label
 
-#             # Calculate perplexity for each option
-#             perp = Perplexity()
-#             for j in range(len(cols)):
-#                 p = perp(logits[j].unsqueeze(0), labels[j].unsqueeze(0))
-#                 perps.append(p.item())
+            # Calculate perplexity for each option
+            perp = Perplexity()
+            for j in range(len(cols)):
+                p = perp(logits[j].unsqueeze(0), labels[j].unsqueeze(0))
+                perps.append(p.item())
 
-#             # Memory management: delete variables no longer needed
-#             del inputs, labels, output, p
+            # Memory management: delete variables no longer needed
+            del inputs, labels, output, p
 
-#             # Sort the indices based on perplexity and get the corresponding options and perplexities
-#             sorted_indices = np.argsort(perps)
-#             top_1_prediction = cols[sorted_indices[0]]
+            # Sort the indices based on perplexity and get the corresponding options and perplexities
+            sorted_indices = np.argsort(perps)
+            top_1_prediction = cols[sorted_indices[0]]
 
-#             preds.append(top_1_prediction)
+            preds.append(top_1_prediction)
 
-#     return preds
+    return preds
 
 
 # Calculate the acccuracy and F1 score
@@ -162,10 +162,15 @@ def inference(args):
 
     model = load_model(args.model_name, fine_tune=False, adapter_path=args.adapter_path)
     tokenizer = load_tokenizer(args.model_name)
-    test_dataset = format_dataset(args.test_data_file, fine_tune=False) # few_shot=True, dataset_name='lek'
+    test_dataset = format_dataset(args.test_data_file, fine_tune=False) 
 
-    # preds = evaluate_model_on_dataset(model, tokenizer, test_dataset, args.batch_size) 
-    preds = evaluate_model_on_dataset(model, tokenizer, test_dataset) 
+    # Decide how many options to handle based on the test set name
+    if 'medmcqa_4183' in args.test_data_file:
+        evaluate_function = evaluate_model_on_dataset_four_options
+    else:
+        evaluate_function = evaluate_model_on_dataset
+
+    preds = evaluate_function(model, tokenizer, test_dataset) # args.batch_size
 
     test_df = pd.read_csv(args.test_data_file)
     test_df['Prediction'] = preds
@@ -191,7 +196,7 @@ def main():
     parser.add_argument("--adapter_path", type=str, required=False, help="The path to the adapter")
     parser.add_argument('--test_data_file', type=str, required=True, help='File path to the test dataset')
     parser.add_argument("--saved_result_dir", type=str, required=True, help="Directory to save the inference results")
-    parser.add_argument("--batch_size", type=int, default=4, help="Batch size for model evaluation")
+    # parser.add_argument("--batch_size", type=int, default=4, help="Batch size for model evaluation")
     # # parser.add_argument("--options_count", type=int, default=5, help="Number of option indexes for question")
 
     args = parser.parse_args()

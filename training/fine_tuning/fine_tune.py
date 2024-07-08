@@ -19,8 +19,20 @@ from shared_utils import load_model, load_tokenizer, format_dataset
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-# Set seed for the Transformer library (i.e. Trainer)
-set_seed(42)
+
+import random
+import numpy as np
+
+def set_seeds(seed=42):
+    """ Set seeds for reproducibility. """
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)  # if using multi-GPU
+    # Ensures that CUDA operations are deterministic
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 
 # Disable data shuffling in PyTorch to ensure data ordering is strictly applied
@@ -71,11 +83,14 @@ def fine_tune(args):
         per_device_eval_batch_size=args.per_device_eval_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         learning_rate=args.learning_rate,
+        # lr_scheduler_type = 'constant',
+        # lr_scheduler_type = "cosine_with_restarts",
+        # lr_scheduler_type = "cosine", # linear # this defines the lr decay
+        # warmup_steps=200, # Learning rate warm-up steps
         logging_dir=f"{args.saved_model_dir}/logs",
         logging_steps=10,
         logging_strategy="steps",
         save_strategy="epoch",
-        # warmup_steps=2, # Learning rate warm-up steps
         optim="paged_adamw_8bit",
         fp16=True,
         # save_total_limit=1,  # The number of saved checkpoints
@@ -91,7 +106,7 @@ def fine_tune(args):
         tokenizer=tokenizer,
         peft_config=qlora_config,
         dataset_text_field="text",
-        max_seq_length=500, 
+        max_seq_length=512, 
         data_collator=DataCollatorForCompletionOnlyLM(tokenizer=tokenizer, response_template="Answer:")
     )
 
@@ -106,6 +121,12 @@ def fine_tune(args):
 
 
 if __name__ == "__main__":
+    # Set seed for the Transformer library (i.e. Trainer)
+    set_seed(42)
+
+    # Set seeds for pytorch
+    set_seeds(42)
+
     parser = argparse.ArgumentParser(description="Fine-tune a model on a dataset.")
     parser.add_argument("--model_name", type=str, required=True, help="Model name or path")
     parser.add_argument("--train_data_file", type=str, required=True, help="Path to the training data file")
@@ -120,7 +141,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     fine_tune(args)
-
-
-# Terminal code example
-# CUDA_VISIBLE_DEVICES=0 python fine_tune.py --model_name meta-llama/Llama-2-7b-chat-hf --saved_model_dir /code/llm-fine-tuning/MODELS_TRY/2e --num_of_epochs 2 --per_device_train_batch_size 4 --per_device_eval_batch_size 4 --gradient_accumulation_steps 2 --learning_rate 1e-04 --train_data_file /code/llm-fine-tuning/TRAINING_SETS/train_set_fold_2.csv 

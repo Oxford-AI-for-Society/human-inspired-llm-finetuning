@@ -97,7 +97,7 @@ D) {d}
     return {"text": text}
 
 
-def format_dataset(data_file, fine_tune, few_shot=False, dataset_name=None):
+def format_dataset(data_file, fine_tune):
     dataset = load_dataset("csv", data_files=data_file)
 
     # Apply the formatting function to each example in the dataset, passing the fine_tune flag
@@ -121,11 +121,9 @@ def main():
 
     # Define some example parameters
     fine_tune = False
-    few_shot = True
-    dataset = 'lek'
-    
+
     # Format the single example using your predefined function
-    formatted_example = format_example(example_question, fine_tune, few_shot, dataset)
+    formatted_example = format_example(example_question, fine_tune)
 
     # Print the formatted example
     print(formatted_example)
