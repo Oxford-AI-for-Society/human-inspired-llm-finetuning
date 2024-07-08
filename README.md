@@ -10,7 +10,7 @@ The learning orders inspired by human-learning strategies are contained in `./tr
 
 To fine-tune a LLM for medical question answering with multiple choices, see `./training/fine-tuning/fine-tune.py`. For inference, see `./training/inference/inference.py`. 
 
-## Clustering 
+## Clustering questions
 To cluster question categories based on semantic similarity using UMAP + HDBSCAN, see `./text_clustering.py`.
 
 ## How to cite
