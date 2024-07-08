@@ -7,6 +7,7 @@ The code that measures question difficulty based on LLMs' responses is contained
 
 ## Fine-tuning
 The learning orders inspired by human-learning strategies are contained in `./training/data_ordering.py`.
+
 To fine-tune a LLM for medical question answering with multiple choices, see `./training/fine-tuning/fine-tune.py`. For inference, see `./training/inference/inference.py`. 
 
 ## Clustering 
