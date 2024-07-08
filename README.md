@@ -1,19 +1,32 @@
-# Fine-tuning LLMs with Human-inspired learning Strategies
+# Fine-tuning LLMs with Human-inspired Learning Strategies
 
-This repository provides the fine-tuning experiments in 'Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering'.
+This repository contains the fine-tuning experiments from the paper 'Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering'.
 
-## LLM difficulty measure
-The code that measures question difficulty based on LLMs' responses is contained in `./measure_difficulty`. 
+## Measuring Question Difficulty with LLMs
 
-To run LLMs to measure difficulty of questions, see `./measure_difficulty/baseline_script.py`.
+To use LLMs for measuring the difficulty of questions, refer to:
+- `./measure_difficulty/baseline_script.py`
 
-## Fine-tuning
-The learning orders inspired by human-learning strategies are contained in `./training/data_ordering.py`.
+To score questions based on LLM-defined difficulty, use:
+- `./measure_difficulty/scoring.py`
 
-To fine-tune a LLM for medical question answering with multiple choices, see `./training/fine-tuning/fine-tune.py`. For inference, see `./training/inference/inference.py`. 
+## Fine-tuning the LLM
 
-## Clustering questions
-To cluster question categories based on semantic similarity using UMAP + HDBSCAN, see `./text_clustering.py`.
+The scripts for learning orders inspired by human-learning strategies are located in:
+- `./training/data_ordering.py`
 
-## How to cite
-If you find our work relevant, please cite as following:
+To fine-tune a LLM for multiple-choice medical question answering, refer to:
+- `./training/fine-tuning/fine-tune.py`
+
+For inference, use:
+- `./training/inference/inference.py`
+
+## Clustering Questions
+
+To cluster question categories based on semantic similarity using UMAP and HDBSCAN, see:
+- `./text_clustering.py`
+
+## How to Cite
+
+If you find our work relevant, please cite it as follows:
+
