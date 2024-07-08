@@ -1,6 +1,6 @@
 # Fine-tuning LLMs with Human-inspired learning Strategies
 
-This repository provides code for the fine-tuning experiments in 'Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering'.
+This repository provides the fine-tuning experiments in 'Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering'.
 
 ## LLM difficulty measure
 The code that measures question difficulty based on LLMs' responses is contained in `./measure_difficulty`. To run LLMs to measure difficulty of questions, see `./measure_difficulty/baseline_script.py`.
