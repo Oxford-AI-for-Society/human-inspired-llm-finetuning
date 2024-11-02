@@ -1,12 +1,12 @@
 # Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering
 
-This repository contains the code for the paper [Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering](https://arxiv.org/abs/2408.07888), accepted at NeurIPS 2024 workshop [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)](https://sites.google.com/view/neurips2024-ftw).
+Code for the fine-tuning experiments in [Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering](https://arxiv.org/abs/2408.07888), accepted at NeurIPS 2024 workshop [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)](https://sites.google.com/view/neurips2024-ftw).
 
 ![Fine-tuning with human-inspired learning strategies](learning_orders.png)
 
 ## Overview
 
-We explored how human-inspired learning strategies can be used to fine-tune large language models (LLMs) efficiently for multiple-choice medical question answering tasks. This code base provides scripts for measuring question difficulty with LLMs, generating human-inspired learning data orders, fine-tuning LLMs using QLora, and clustering for question categories.
+We explored how human-inspired learning strategies can be used to fine-tune large language models (LLMs) efficiently for multiple-choice medical question answering tasks. This code base provides scripts for measuring question difficulty with LLMs, generating human-inspired learning data orders, fine-tuning LLMs using [QLora](https://github.com/artidoro/qlora), and clustering for question categories.
 
 ## Installation
 
