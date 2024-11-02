@@ -52,11 +52,9 @@ To cluster question categories based on semantic similarity using UMAP and HDBSC
 python ./text_clustering.py
 ```
 
-## How to cite
+## Citation
 
 If you find our work relevant, please cite it as follows:
-
-## Citation
 ```bibtex
 @misc{yang2024finetuninglargelanguagemodels,
       title={Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering}, 
