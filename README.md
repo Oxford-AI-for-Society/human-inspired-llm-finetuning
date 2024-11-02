@@ -14,16 +14,19 @@ Make sure you have Python and `pip` installed. Install the required packages wit
 
 ```bash
 pip install -r requirements.txt
+```
 
 ## Measuring question difficulty with LLMs
 
 To assess question difficulty using LLMs, run:
 ```bash
 python ./measure_difficulty/baseline_script.py
+```
 
 To score questions based on LLM-defined difficulty, run:
 ```bash
 python ./measure_difficulty/scoring.py
+```
 
 ## Fine-tuning LLMs with QLora
 
