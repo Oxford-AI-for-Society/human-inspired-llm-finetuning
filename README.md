@@ -1,25 +1,29 @@
 # Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering
 
-Code for the fine-tuning experiments in [Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering](https://arxiv.org/abs/2408.07888), accepted at NeurIPS 2024 workshop [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)](https://sites.google.com/view/neurips2024-ftw).
+This repository contains the code for the paper [Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering](https://arxiv.org/abs/2408.07888), accepted at NeurIPS 2024 workshop [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)](https://sites.google.com/view/neurips2024-ftw).
 
 ![Fine-tuning with human-inspired learning strategies](learning_orders.png)
 
+## Overview
 
-## How to run code
+We explored how human-inspired learning strategies can be used to fine-tune large language models (LLMs) efficiently for multiple-choice medical question answering tasks. This code base provides scripts for measuring question difficulty with LLMs, generating human-inspired learning data orders, fine-tuning LLMs using QLora, and clustering for question categories.
 
-Install requirements
+## Installation
 
-```
+Make sure you have Python and `pip` installed. Install the required packages with:
+
+```bash
 pip install -r requirements.txt
-```
 
 ## Measuring question difficulty with LLMs
 
-To use LLMs for measuring the difficulty of questions, run:
-- `./measure_difficulty/baseline_script.py`
+To assess question difficulty using LLMs, run:
+```bash
+python ./measure_difficulty/baseline_script.py
 
 To score questions based on LLM-defined difficulty, run:
-- `./measure_difficulty/scoring.py`
+```bash
+python ./measure_difficulty/scoring.py
 
 ## Fine-tuning LLMs with QLora
 
