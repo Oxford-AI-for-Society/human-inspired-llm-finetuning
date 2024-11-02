@@ -1,4 +1,4 @@
-# Fine-tuning LLMs with Human-inspired Learning Strategies
+# Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering
 
 This repository contains the fine-tuning experiments from the paper 'Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering'.
 
@@ -10,7 +10,7 @@ To use LLMs for measuring the difficulty of questions, refer to:
 To score questions based on LLM-defined difficulty, use:
 - `./measure_difficulty/scoring.py`
 
-## Fine-tuning the LLM
+## Fine-tuning LLMs with QLora
 
 The scripts for learning orders inspired by human-learning strategies are located in:
 - `./training/data_ordering.py`
