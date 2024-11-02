@@ -23,7 +23,7 @@ For inference, use:
 
 ## Clustering Questions
 
-To cluster question categories based on semantic similarity using UMAP and HDBSCAN, see:
+To cluster question categories based on semantic similarity using UMAP and HDBSCAN, use:
 - `./text_clustering.py`
 
 ## How to Cite
