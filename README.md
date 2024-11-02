@@ -1,4 +1,4 @@
-# Human-Inspired Fine-tuning on LLMs in Medical Question Answering
+# Human-Inspired Fine-Tuning Strategies for LLMs in Medical Question Answering
 
 Code for the fine-tuning experiments in [Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering](https://arxiv.org/abs/2408.07888), accepted at NeurIPS 2024 workshop [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)](https://sites.google.com/view/neurips2024-ftw).
 
