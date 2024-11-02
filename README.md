@@ -2,7 +2,7 @@
 
 This repository contains code for the fine-tuning experiments in [Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering](https://arxiv.org/abs/2408.07888).
 
-The paper is presented at NeurIPS 2024 in the workshop on [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)]([https://adaptive-foundation-models.org/](https://sites.google.com/view/neurips2024-ftw)).
+The paper is presented at NeurIPS 2024 in the workshop on [Fine-Tuning in Modern Machine Learning: Principles and Scalability (FITML)]([https://sites.google.com/view/neurips2024-ftw]).
 
 ![Fine-tuning with human-inspired learning strategies](learning_orders.png)
 
