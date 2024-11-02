@@ -18,29 +18,29 @@ pip install -r requirements.txt
 
 ## Measuring question difficulty with LLMs
 
-1. Measure question difficulty using LLMs:
+### 1. Measure question difficulty using LLMs:
 ```bash
 python ./measure_difficulty/baseline_script.py
 ```
 
-2. Score questions based on LLM-defined difficulty:
+### 2. Score questions based on LLM-defined difficulty:
 ```bash
 python ./measure_difficulty/scoring.py
 ```
 
 ## Fine-tuning LLMs with QLora
 
-1. Generate learning orders inspired by human-learning strategies:
+### 1. Generate learning orders inspired by human-learning strategies:
 ```bash
 python ./training/data_ordering.py
 ```
 
-2. Fine-tune a LLM for multiple-choice medical question answering datasets:
+### 2. Fine-tune a LLM for multiple-choice medical question answering datasets:
 ```bash
 python ./training/fine-tuning/fine-tune.py
 ```
 
-3. Run inference:
+### 3. Run inference:
 ```bash
 python ./training/inference/inference.py
 ```
