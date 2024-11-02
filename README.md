@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Measuring question difficulty with LLMs
 
-1. Measure question difficulty using LLMs:
+- Measure question difficulty using LLMs:
 ```bash
 python ./measure_difficulty/baseline_script.py
 ```
