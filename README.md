@@ -5,6 +5,14 @@ This repository contains code for the fine-tuning experiments in [Evaluating Fin
 ![Fine-tuning with human-inspired learning strategies](learning_orders.png)
 
 
+## How to run code
+
+Install requirements
+
+```
+pip install -r requirements.txt
+```
+
 ## Measuring question difficulty with LLMs
 
 To use LLMs for measuring the difficulty of questions, run:
