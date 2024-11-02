@@ -1,6 +1,6 @@
 # Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering
 
-This repository contains the fine-tuning experiments from the paper 'Fine-tuning Large Language Models with Human-inspired Learning Strategies in Medical Question Answering'.
+This repository contains the code for fine-tuning experiments in the paper 'Evaluating Fine-Tuning Efficiency of Human-Inspired Learning Strategies in Medical Question Answering'.
 
 ## Measuring Question Difficulty with LLMs
 
